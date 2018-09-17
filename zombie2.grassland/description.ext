@@ -1,0 +1,22 @@
+#include "azm_config.hpp"
+#include "gui\azm_defines.hpp"
+#include "sounds\suoni.hpp"
+enableDebugConsole[] = {"76561198164382639"};
+
+
+
+class RscTitles {
+    #include "gui\gui.hpp"
+};
+
+
+class CfgDebriefing
+{
+	// Used when all players die in MP
+	class morte
+	{
+		title = "Tutti i giocatori sono morti";
+		description = "Tutti i sopravvissuti sono stati sconfitti.";
+		picture = "KIA";
+	};
+};
