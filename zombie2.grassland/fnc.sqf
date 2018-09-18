@@ -215,7 +215,7 @@ azm_round = {
 		};	
 	} else {
 		if (_round > 3) then {
-			for "_i" from 1 to ((round(_round / 2)) * (count(allPlayers))) step 1 do {
+			for "_i" from 1 to ((round(_round / 2)) + (count(allPlayers))) step 1 do {
 				(selectRandom _fastzombie) createUnit [(getmarkerPos (selectRandom (missionNamespace getVariable ["real_spawn1",[]]))),_group,"this setpos [(getpos this select 0) + random 3, (getpos this select 1) + random 3, 1];[this] spawn azm_events_zombie;"];
 				DEBUG(systemChat "fast");
 				_zombie_counter_fast = missionNamespace getVariable ["count_zombie",0];
@@ -223,7 +223,7 @@ azm_round = {
 				missionNamespace setVariable ["count_zombie",_zombie_counter_fast,true];
 			};
 		};
-		for "_i" from 1 to ((_round) * (count(allPlayers))) step 1 do {
+		for "_i" from 1 to ((_round) + (count(allPlayers))) step 1 do {
 			(selectRandom _slowzombie) createUnit [(getmarkerPos (selectRandom (missionNamespace getVariable ["real_spawn1",[]]))),_group,"this setpos [(getpos this select 0) + random 3, (getpos this select 1) + random 3, 1];[this] spawn azm_events_zombie;"];
 			DEBUG(systemChat "slow");
 			_zombie_counter_slow = missionNamespace getVariable ["count_zombie",0];
@@ -238,6 +238,7 @@ azm_round = {
 azm_events_zombie = {
 	private _zombie = _this select 0;
 	private _random_loadout = GARR("load_zombie");
+	_zombie setUnitLoadout (selectRandom _random_loadout);
 	_zombie setVariable["alive",true,true];
 	_zombie addEventHandler ["Killed",{
 		params ["_unit", "_killer", "_instigator", "_useEffects"];
@@ -420,9 +421,6 @@ azm_kaboom = {
 	} forEach _sel_del_zombie;
 	missionNamespace setVariable["azm_pup_active",true,true];
 	cutText ["<t size='3' color='#f00000'>KABOOM","PLAIN DOWN",3,true,true];
-	private _zombie_counter = missionNamespace getVariable ["count_zombie",0];
-	_zombie_counter = _zombie_counter - (count(_sel_del_zombie) - 1);
-	missionNamespace setVariable ["count_zombie",_zombie_counter,true];
 	missionNamespace setVariable["azm_pup_active",false,true];
 };
 
@@ -439,11 +437,11 @@ azm_only_fp = {
 
 
 azm_life_sys = {
-	player hideObject true;
+	player hideObjectGlobal true;
 	removeAllWeapons player;
-	["Initialize", [player]] call BIS_fnc_EGSpectator;
+	["Initialize", [player, ["WEST"], false, false, true, true, true, false, false, true]] call BIS_fnc_EGSpectator;
 	[] spawn {
-		waitUntil {missionnamespace getvariable["azm_round_end",false]};
+		waitUntil {missionnamespace getvariable["azm_round_end",false] || missionNamespace getVariable ["admin_respawn",false]};
 		_c_morti = missionnamespace getvariable["azm_players_morti",0];
 		_c_morti = _c_morti - 1;
 		missionNamespace setVariable ["azm_players_morti",_c_morti,true];
@@ -461,7 +459,7 @@ azm_life_sys = {
 		player setVariable ["azm_perk_buy_stamina",false];
 		player setPos (getmarkerPos GTEXT("spawnmarker"));
 		player setUnitLoadout GARR("loadout");
-		player hideObject false;
+		player hideObjectGlobal false;
 		uiSleep 1.4;
 		cutText["","BLACK IN"];
 	};
