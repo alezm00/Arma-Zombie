@@ -24,7 +24,7 @@ azm_crate_start = {
 	private _arr_weapons = GARR("random_weapons");
 	private _crate = _this select 0;
 	private _soldi = player getVariable ["soldi",0];
-	if (_soldi < GNUM("random_crate_price")) exitWith {hint "Non hai abbastanza punti"};
+	if (_soldi < GNUM("random_crate_price")) exitWith {hint format["%1",["STR_PERK_NO_MONEY"],call azm_localize]};
 	player setVariable ["soldi",(_soldi - GNUM("random_crate_price"))];
 	if (_crate getVariable ["azm_cassa_utilizzi",0] isEqualTo 0) exitWith {
 		deleteVehicle _crate;
@@ -89,7 +89,7 @@ azm_buy_w_crate = {
 		player addMagazine _magazineType;
 	};
 	player addWeapon (_cursor getVariable["azm_w_class",""]);
-	systemChat format["Hai ottenuto una %1", getText(configFile >> "cfgWeapons" >> (_cursor getVariable["azm_w_class",""]) >> "displayName")];
+	systemChat format[(["STR_RC_GET_WEAPON"]call azm_localize), getText(configFile >> "cfgWeapons" >> (_cursor getVariable["azm_w_class",""]) >> "displayName")];
 	
 }; 
 

@@ -61,7 +61,4 @@ class azm_zombie_config
 
 
 
-    /* in game messages */    
-    msg_nopunti = "Non hai abbastanza punti per aprire questo cancello";
-    msg_areaaperta = "%1 ha aperto una nuova area";
 };

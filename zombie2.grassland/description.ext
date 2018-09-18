@@ -1,6 +1,8 @@
 #include "azm_config.hpp"
 #include "gui\azm_defines.hpp"
 #include "sounds\suoni.hpp"
+#include "gui\sel_language.hpp"
+#include "localization.hpp"
 enableDebugConsole[] = {"76561198164382639"};
 
 

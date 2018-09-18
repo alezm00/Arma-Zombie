@@ -17,9 +17,9 @@ class EditorData
 	class Camera
 	{
 		pos[]={1718.0229,29.385334,2829.218};
-		dir[]={-0.38148475,-0.23057374,0.89528602};
-		up[]={-0.090427831,0.97299773,0.21222553};
-		aside[]={0.92007947,-3.1042146e-007,0.39204636};
+		dir[]={0.25169477,-0.13960502,0.95780605};
+		up[]={0.035516158,0.99015951,0.13514599};
+		aside[]={0.96728235,-5.6438148e-007,-0.25418782};
 	};
 };
 binarizationWanted=0;
@@ -60836,7 +60836,7 @@ class Mission
 			flags=4;
 			class Attributes
 			{
-				init="call{this addAction [""Avvia partita"",{missionNamespace setVariable [""azm_online"",true]; removeAllActions cursorObject}];}";
+				init="call{this addAction [""Let's go"",{missionNamespace setVariable [""azm_online"",true]; removeAllActions cursorObject}];}";
 				disableSimulation=1;
 			};
 			id=3152;

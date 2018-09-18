@@ -31,8 +31,8 @@ azm_perk_jug = { //
 		["_prezzo",0,[0]]
 	];
 	private _soldi = player getVariable ["soldi",0];
-	if (player getVariable ["azm_perk_buy_jug",false]) exitWith {hint "Possiedi gia questo perk"};
-	if (_soldi < GNUM("costo_perk_jug")) exitWith {hint "Non hai abbastanza punti per comprare questo perk"};
+	if (player getVariable ["azm_perk_buy_jug",false]) exitWith {hint format["%1",["STR_PERK_ALREADY_OWN"],call azm_localize];};
+	if (_soldi < GNUM("costo_perk_jug")) exitWith {hint format["%1",["STR_PERK_NO_MONEY"],call azm_localize]};
 	_soldi = _soldi - GNUM("costo_perk_jug");
 	player setVariable ["azm_perk_buy_jug",true];
 	player setVariable ["soldi",_soldi,true];
@@ -56,8 +56,8 @@ azm_perk_dt = {
 		["_prezzo",0,[0]]
 	];
 	private _soldi = player getVariable ["soldi",0];
-	if (player getVariable ["azm_perk_buy_dt",false]) exitWith {hint "Possiedi gia questo perk"};
-	if (_soldi < GNUM("costo_perk_dt")) exitWith {hint "Non hai abbastanza punti per comprare questo perk"};
+	if (player getVariable ["azm_perk_buy_dt",false]) exitWith {hint format["%1",["STR_PERK_ALREADY_OWN"],call azm_localize]};
+	if (_soldi < GNUM("costo_perk_dt")) exitWith {hint format["%1",["STR_PERK_NO_MONEY"],call azm_localize]};
 	hint GTEXT("msg_perk_dt");
 	player setVariable ["azm_perk_buy_dt",true];
 	_soldi = _soldi - GNUM("costo_perk_dt");
@@ -89,8 +89,8 @@ azm_perk_stamina = {
 		["_prezzo",0,[0]]
 	];
 	private _soldi = player getVariable ["soldi",0];
-	if (player getVariable ["azm_perk_buy_stamina",false]) exitWith {hint "Possiedi gia questo perk"};
-	if (_soldi < GNUM("costo_perk_stamina")) exitWith {hint "Non hai abbastanza punti per comprare questo perk"};
+	if (player getVariable ["azm_perk_buy_stamina",false]) exitWith {hint format["%1",["STR_PERK_ALREADY_OWN"],call azm_localize]};
+	if (_soldi < GNUM("costo_perk_stamina")) exitWith {hint format["%1",["STR_PERK_NO_MONEY"],call azm_localize]};
 	player setVariable ["azm_perk_buy_stamina",true];
 	hint GTEXT("msg_perk_stamina");
 	_soldi = _soldi - GNUM("costo_perk_stamina");
@@ -121,15 +121,11 @@ azm_buy_weapon = { //  ["fow_w_g43",100,true] call azm_buy_weapon;
 		];
 	if (_class == "") exitWith {};
 	private _soldi = player getVariable ["soldi",0];
-	if (_soldi < _price) exitWith {hint "Non hai abbastanza punti per comprare questa arma"};
+	if (_soldi < _price) exitWith {hint format["%1",["STR_PERK_NO_MONEY"] call azm_localize]};
 	//playSound "buySound";
 	private _primary = primaryWeapon player;
 	private _secondary = handgunWeapon player;
 	
-	if (cursorObject getVariable["azm_w_fromcrate",false]) then {
-		cursorObject setVariable ["azm_rc_raccolta",true,true];
-	};
-
 	if !(currentWeapon player isEqualTo "fow_w_p08") then {
 		if (_primary != "" and _primaria) then
 		{
@@ -148,9 +144,9 @@ azm_buy_weapon = { //  ["fow_w_g43",100,true] call azm_buy_weapon;
 	};
 	player setVariable ["soldi",(_soldi - _price)];
 	if !(_price isEqualTo 0) then {
-		systemChat format["hai comprato una %1 per %2 punti", getText(configFile >> "cfgWeapons" >> _class >> "displayName"), _price];
+		systemChat format[(["STR_BUY_WEAPON"] call azm_localize), getText(configFile >> "cfgWeapons" >> _class >> "displayName"), _price];
 	} else {
-		systemChat format["Hai ricevuto il MAX AMMO per il tuo %1", getText(configFile >> "cfgWeapons" >> _class >> "displayName")];
+		systemChat format[(["STR_MAX_AMMO"]call azm_localize), getText(configFile >> "cfgWeapons" >> _class >> "displayName")];
 	};
 	
 }; 

@@ -111,10 +111,10 @@ while {true} do {
 		active = false;
 		if (player distance cursor < 3) then {
 			if (cursor getVariable["azm_interraction",false]) then {
-				switch (cursor getvariable["azm_type",""]) do {			// cambiare con variabile oggetto
+				switch (cursor getvariable["azm_type",""]) do {			//[""] call azm_localize
 					case "area": {
 						price = cursor getVariable ["azm_a_price",0];
-						textx = parseText format ["<t align='left' size='1.5'>		Premi <t color='#f4f180'>F</t></t><br/><t align='right'>Per sbloccare la nuova area</t><br/><t align='right'>al costo di <t color='#29da10'>%1</t>",price];
+						textx = parseText format [(["STR_AREA_UNLOCK_TEXT"] call azm_localize),price];
 						active = true;
 					};
 					case "weapon": { //
@@ -125,14 +125,14 @@ while {true} do {
 						if !(cursor getVariable ["azm_w_fromcrate",false]) then {
 							if (primaryWeapon player == cursor getVariable ["azm_w_class",""]) then {
 								price = round((cursor getVariable["azm_w_price",0]) * 0.4);
-								textx = parseText format ["<t align='left' size='1.5'>		Premi <t color='#f4f180'>F</t></t><br/><t align='right'>Per comprare le munizioni per il <t color='#29da10'>%1</t><br/><t align='right'>al costo di <t color='#29da10'>%2</t>",namex,price];
+								textx = parseText format [(["STR_WEAPON_BUY_AMMO_TEXT"] call azm_localize),namex,price];
 							} else {
 								price = round(cursor getVariable["azm_w_price",0]);		
-								textx = parseText format ["<t align='left' size='1.5'>		Premi <t color='#f4f180'>F</t></t><br/><t align='right'>Per comprare il <t color='#29da10'>%1</t><br/><t align='right'>al costo di <t color='#29da10'>%2</t>",namex,price];					
+								textx = parseText format [(["STR_WEAPON_BUY_TEXT"] call azm_localize),namex,price];					
 							};
 						} else {
 							price = round(cursor getVariable["azm_w_price",0]);		
-							textx = parseText format ["<t align='left' size='1.5'>		Premi <t color='#f4f180'>F</t></t><br/><t align='right'>Per comprare il <t color='#29da10'>%1</t><br/><t align='right'>al costo di <t color='#29da10'>%2</t>",namex,price];
+							textx = parseText format [(["STR_WEAPON_BUY_TEXT"] call azm_localize),namex,price];
 						};
 						active = true;
 					};
@@ -152,24 +152,24 @@ while {true} do {
 							};
 							default {textx = parseText format[""]; active = false;};
 						};
-						textx = parseText format ["<t align='left' size='1.5'>		Premi <t color='#f4f180'>F</t></t><br/><t align='right'>Per comprare il perk <t color='#29da10'>%1</t><br/><t align='right'>al costo di <t color='#29da10'>%2</t>",namex,price];
+						textx = parseText format [(["STR_PERK_BUY_TEXT"] call azm_localize),namex,price];
 						active = true;
 					};
 					case "ee": {
 						switch (cursor getvariable["azm_e_type",""]) do {
 							case "radio": {
-								textx = parseText format ["<t align='left' size='1.5'>		Premi <t color='#f4f180'>F</t></t><br/><t align='right'>Per raccogliere la <t color='#29da10'>radio</t></t>"];
+								textx = parseText format [(["STR_EE_RADIO_TEXT"] call azm_localize)];
 							};
 							default {textx = parseText format[""]; active = false;};
 						};
 						active = true;
 					};
 					case "rc": {
-						textx = parseText format ["<t align='left' size='1.5'>		Premi <t color='#f4f180'>F</t></t><br/><t align='right'>Per aprire la cassa casuale al costo di:<t color='#29da10'>%1</t></t>",GNUM("random_crate_price")];
+						textx = parseText format [(["STR_RC_CRATE_TEXT"] call azm_localize),GNUM("random_crate_price")];
 						active = true;
 					};
 					case "weapon_crate": {
-						textx = parseText format ["<t align='left' size='1.5'>		Premi <t color='#f4f180'>F</t></t><br/><t align='right'>Per raccoglere l'arma<t color='#29da10'>%1</t></t>"];
+						textx = parseText format [(["STR_WEAPON_CRATE_TEXT"] call azm_localize)];
 						active = true;
 					};
 					default {textx = parseText format[""]; active = false;};

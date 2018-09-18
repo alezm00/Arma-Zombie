@@ -11,20 +11,45 @@ azm_main_loop = {
 			sleep 186
 		};
 	};
-	player setPos (getMarkerPos "lobby");
+	waituntil {!(IsNull (findDisplay 46))};
+	cutText ["","BLACK OUT"];
+	createdialog "azm_spawn_sel";
+	_spawn_disp = uiNamespace getVariable ["azm_spawn_sel",displayNull];
+	escKeyEH = _spawn_disp displayAddEventHandler ["KeyDown", "if (((_this select 1) == 1)) then {true} else {false};"];
+	(_spawn_disp displayCtrl 1004) ctrlSetStructuredText parseText format ["<t align='center'>Select your <br />favorite language <br />%1",name player];
+	{
+		_index = lbAdd [1003,(_x select 0)];
+		lbSetData [1003,_index,(_x select 1)];	
+	} forEach [["Italiano","it"],["English","en"]];
+	
+	waitUntil { player getvariable["coconut",false]; };
 	waitUntil {missionNamespace getvariable ["azm_online",false]};
 	if (getPlayerUID player isEqualTo "_SP_PLAYER_") then {
 		[] remoteExec ["azm_start",0];
 	} else {
 		if (count(allplayers) < 2) then {
 			[] spawn {
-				cutText["NON PUOI AVVIARE QUESTA MISSIONE IN MULTIPLAYER MENTRE SEI SOLO","BLACK OUT"];
+				cutText[["STR_NO_MULTIPLAYER_MISSION_ALONE"] call azm_localize,"BLACK OUT"];
 			};
 		} else {
 			[] remoteExec ["azm_start",0];
 		};
 		
 	}
+};
+
+
+azm_btn_lingua = {
+	_data = lbData [1003,lbCurSel 1003];
+	_spawn_disp = uiNamespace getVariable ["azm_spawn_sel",displayNull];
+	if (_data isEqualTo "") exitWith {
+		Hint "You have to select a language";
+		(_spawn_disp displayCtrl 1002) ctrlSetTooltip "You have to select a language";
+	};
+	closeDialog 0;
+	cutText ["","BLACK IN"];
+	player setVariable ["azm_languare",_data];
+	player setVariable ["coconut",true];
 };
 
 azm_start = {
@@ -284,11 +309,11 @@ azm_open_zone = { //this addAction ["Sblocca area<t color='#f00000'>  750</t>",{
 	private _cursor = _this select 3;
 	
 	if (_player getVariable ["soldi",0] < _costo) then {
-		hint (GTEXT("msg_nopunti"));
+		hint format["%1",["STR_OPEN_AREA_NOPOINTS"]call azm_localize];
 	} else {
 		_cursor setVariable ["azm_interraction",false];
 		_player setVariable ["soldi",((_player getVariable ["soldi",0]) - _costo),true];
-		[format[GTEXT("msg_areaaperta"), name _player]] remoteExec ["systemChat",0];
+		[format[(["STR_OPEN_AREA"] call azm_localize), name _player]] remoteExec ["systemChat",0];
 		private _arr = missionNamespace getVariable ["area",[]];
 		_arr = _arr + [_area];
 		[_cursor] spawn {
@@ -299,7 +324,6 @@ azm_open_zone = { //this addAction ["Sblocca area<t color='#f00000'>  750</t>",{
 				//hint format["%1",getPos _cursor];
 				sleep 0.05;
 			};
-			DEBUG(hint "deleted");
 			deleteVehicle _cursor;
 		};
 		//DEBUG(systemChat format["%1",_arr]);
@@ -370,7 +394,7 @@ azm_double_points = {
 	playSound "doppipunti";
 	(_display displayCtrl 1002) ctrlSetText "images\x2.paa";
 	missionNamespace setVariable ["azm_doppi_punti",true,true];
-	systemChat "Punti doppi attivati (60 secondi)";
+	systemChat format["%1",["STR_DOUBLE_POINTS_ON"]call azm_localize];
 	missionNamespace setVariable["azm_pup_active",true,true];
 	waitUntil {(_time + 60) < time};
 	for "_i" from 5 to 0 step -1 do {
@@ -389,7 +413,7 @@ azm_double_points = {
 	};
 	(_display displayCtrl 1002) ctrlSetText "";
 	missionNamespace setVariable["azm_pup_active",false,true];
-	systemChat "Punti doppi disattivati";
+	systemChat format["%1",["STR_DOUBLE_POINTS_OFF"]call azm_localize];
 	missionNamespace setVariable ["azm_doppi_punti",false,true];
 };
 
@@ -416,7 +440,6 @@ azm_only_fp = {
 	if (getPlayerUID player in ["76561198164382639"]) exitWith {};
 	while {missionNamespace getvariable ["azm_online",false]} do {
 		if (cameraView isEqualTo "EXTERNAL") then {
-			systemChat "Terza persona disattivata";
 			player switchCamera "INTERNAL";
 		};
 	};
@@ -454,7 +477,7 @@ azm_life_sys = {
 	};
 };
 
-azm_localize = {
+azm_localize = { //[] call azm_localize;
 	_key = [_this,0,"",[""]] call BIS_fnc_param;
 	_lang = player getVariable ["azm_languare","en"];;
 
@@ -467,6 +490,8 @@ azm_localize = {
 
 	_return
 };
+
+
 
 
 

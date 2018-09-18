@@ -33,7 +33,7 @@ azm_ee_radio = {
 			(_display displayCtrl _x) ctrlCommit 2;
 		} forEach [1009,1010,1011];
 	}] remoteExec ["call",0];
-	[format["%1 ha raccolto una radio",name player]] remoteExec ["systemChat",0];
+	[format[(["STR_EE_RADIO_COLLECT"]call azm_localize),name player]] remoteExec ["systemChat",0];
 	if (_radio isEqualTo 3) then {
 		"centoquindici" remoteExec ["playSound",0];
 		[[],{

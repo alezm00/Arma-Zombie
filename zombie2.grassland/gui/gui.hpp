@@ -3,7 +3,7 @@ class azm_gui {
     name = "azm_gui";
     movingenable = false;
     enablesimulation = true;
-    duration = 9999999999999;
+    duration = 99999999999999999;
     onLoad = "uiNamespace setVariable ['azm_gui',_this select 0]";
     class controlsBackground
     {
