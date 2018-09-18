@@ -7,19 +7,18 @@ class azm_gui {
     onLoad = "uiNamespace setVariable ['azm_gui',_this select 0]";
     class controlsBackground
     {
+    };
+    class controls
+    {
         class sfondomoney : RscPicture
         {
             x = 0.823958 * safezoneW + safezoneX;
             y = 0.749783 * safezoneH + safezoneY;
             w = 0.121875 * safezoneW;
             h = 0.046711 * safezoneH;
-            idc = -1;
-            text = "images\sangue.paa";
+            idc = 1000;
+            text = "";
         };
-    };
-    class controls
-    {
-        
         class round : RscStructuredText
         {
             x = 0.02552 * safezoneW + safezoneX;

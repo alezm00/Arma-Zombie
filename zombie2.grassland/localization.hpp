@@ -1,4 +1,8 @@
 class zombie_Localization {
+	class STR_CONFIRM_TEXT {
+		en = "Are you sure to start the mission maybe you have to wait for your fiends in lobby";
+		it = "Sei sicuro di voler iniziare la partita controlla che non ci siamo altri player in lobby";
+	};
 	class STR_AREA_UNLOCK_TEXT {
 		en = "<t align='left' size='1.5'>		Press <t color='#f4f180'>F</t></t><br/><t align='right'>To unlock the new area</t><br/><t align='right'>for <t color='#29da10'>%1</t>";
 		it = "<t align='left' size='1.5'>		Premi <t color='#f4f180'>F</t></t><br/><t align='right'>Per sbloccare la nuova area</t><br/><t align='right'>al costo di <t color='#29da10'>%1</t>";

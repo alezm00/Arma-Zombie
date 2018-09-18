@@ -219,8 +219,8 @@ class RscPicture {
     style = 48;
     sizeEx = 0.023;
     font = "PuristaSemiBold";
-    colorBackground[] = {0,0,0,1};
-    colorText[] = {0,0,0,1};
+    colorBackground[] = {1,1,1,1};
+    colorText[] = {1,1,1,1};
     x = 0;
     y = 0;
     w = 0.2;

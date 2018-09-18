@@ -27,15 +27,20 @@ azm_crate_start = {
 	if (_soldi < GNUM("random_crate_price")) exitWith {hint format["%1",["STR_PERK_NO_MONEY"],call azm_localize]};
 	player setVariable ["soldi",(_soldi - GNUM("random_crate_price"))];
 	if (_crate getVariable ["azm_cassa_utilizzi",0] isEqualTo 0) exitWith {
+		_crate say3D ["finishrandom",20,1];
+		sleep 8;
 		deleteVehicle _crate;
 		call azm_spawn_crate;
 	};
+	_crate say3D ["randomweaponbox",15,1];
+	sleep 0.5;
 	_crate setVariable ["azm_cassa_utilizzi",((_crate getVariable["azm_cassa_utilizzi",0]) - 1),true];
 	private _win_w = selectRandom _arr_weapons;
 	private _random_display = [];
-	for "_i" from 0 to 9 do {
+	for "_i" from 0 to 6 do {
 		_random_display = _random_display + [(selectRandom _arr_weapons)];
 	};
+	//playSound "randomweaponbox";
 	{
 		private _objw = createVehicle [(_x select 0),getPosATL player, [], 0, "CAN_COLLIDE"];
 		_objw attachTo [_crate,[0,0,0.5]];

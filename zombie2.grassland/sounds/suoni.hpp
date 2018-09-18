@@ -84,4 +84,16 @@ class CfgSounds
         sound[] = {"sounds\pickup.ogg",7,1.0};
         titles[] = { 0, "" };
     };
+    class randomweaponbox
+    {
+        name = "randomweaponbox";
+        sound[] = {"sounds\randomWeaponBox.ogg",60,1,100};
+        titles[] = { 0, "" };
+    };
+    class finishrandom
+    {
+        name = "finishrandom";
+        sound[] = {"sounds\finishrandom.ogg",60,1,100};
+        titles[] = { 0, "" };
+    };
 };

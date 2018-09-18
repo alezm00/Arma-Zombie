@@ -12,8 +12,11 @@ azm_main_loop = {
 		};
 	};
 	waituntil {!(IsNull (findDisplay 46))};
-	cutText ["","BLACK OUT"];
+	blur = ppEffectCreate ["DynamicBlur", 999];
+	blur ppEffectEnable true;
 	createdialog "azm_spawn_sel";
+	blur ppEffectAdjust [8];
+	blur ppEffectCommit 0.05;
 	_spawn_disp = uiNamespace getVariable ["azm_spawn_sel",displayNull];
 	escKeyEH = _spawn_disp displayAddEventHandler ["KeyDown", "if (((_this select 1) == 1)) then {true} else {false};"];
 	(_spawn_disp displayCtrl 1004) ctrlSetStructuredText parseText format ["<t align='center'>Select your <br />favorite language <br />%1",name player];
@@ -40,6 +43,26 @@ azm_main_loop = {
 	}
 };
 
+azm_confirm_start = {
+	if (getPlayerUID player isEqualTo "_SP_PLAYER_") then {
+		missionNamespace setVariable ["azm_online",true];
+		removeAllActions cursorObject;
+	} else {
+		createDialog "azm_confirm_gui";
+		blur ppEffectAdjust [8];
+		blur ppEffectCommit 0.7;
+		_disp_confirm = uiNamespace getVariable ["azm_confirm_gui",displayNull];
+		escKeyEH = _disp_confirm displayAddEventHandler ["KeyDown", "if (((_this select 1) == 1)) then {blur ppEffectAdjust [0]; blur ppEffectCommit 0.01;} else {false};"];
+		(_disp_confirm displayCtrl 1003) ctrlEnable false;
+		(_disp_confirm displayCtrl 1002) ctrlSetStructuredText parseText format[(["STR_CONFIRM_TEXT"]call azm_localize)];
+		for "_i" from 5 to 1 step -1 do {
+			(_disp_confirm displayCtrl 1003) ctrlSetText (str(_i));
+			sleep 1;
+		};
+		(_disp_confirm displayCtrl 1003) ctrlSetText "Let's go";
+		(_disp_confirm displayCtrl 1003) ctrlEnable true;
+	};
+};
 
 azm_btn_lingua = {
 	_data = lbData [1003,lbCurSel 1003];
@@ -49,7 +72,8 @@ azm_btn_lingua = {
 		(_spawn_disp displayCtrl 1002) ctrlSetTooltip "You have to select a language";
 	};
 	closeDialog 0;
-	cutText ["","BLACK IN"];
+	blur ppEffectAdjust [0];
+	blur ppEffectCommit 1;
 	player setVariable ["azm_languare",_data];
 	player setVariable ["coconut",true];
 };
@@ -79,6 +103,14 @@ azm_start = {
 	private _display = uiNamespace getVariable ["azm_gui",displayNull];
 	soldi = GNUM("moneystart");
 	DEBUG(soldi = 99999);
+
+
+	(_display displayCtrl 1000) ctrlSetText "images\sangue.paa";	
+	(_display displayCtrl 1000) ctrlSetFade 1; 
+	(_display displayCtrl 1000) ctrlCommit 0;
+	(_display displayCtrl 1000) ctrlSetFade 0;
+	(_display displayCtrl 1000) ctrlCommit 0.5;
+	
 	player setVariable ["soldi",soldi,true];
 	(_display displayCtrl 1003) ctrlSetStructuredText parseText format ["<t size='1.2' color='#f4f180'>%1</t>",player getVariable ["soldi",0]];
 	(_display displayCtrl 1001) ctrlSetStructuredText parseText format ["<t size='6' color='#f00000'>%1</t>",(missionNamespace getVariable ["azm_count_round",0])];
@@ -327,7 +359,7 @@ azm_open_zone = { //this addAction ["Sblocca area<t color='#f00000'>  750</t>",{
 azm_random_pup = {
 	params ["_unit"];
 	if (missionNamespace getVariable["azm_pup_active",true]) exitWith {};
-	if (random 100 < 15) then {
+	if (random 100 < 5) then {
 		missionNamespace setVariable["azm_pup_active",true,true];
 		private _obj = createVehicle ["UserTexture_1x2_F",(getPosATL _unit)];
 		private _trg = createTrigger ["EmptyDetector", getPosATL _obj];
@@ -355,7 +387,7 @@ azm_random_pup = {
 
 azm_pick_pup = {
 	playSound "pickup";
-	private _r_arr = selectRandom["max_ammo","double_points"]; //,"kaboom"
+	private _r_arr = selectRandom["max_ammo","double_points","kaboom"]; //
 	switch (_r_arr) do {
 		case "max_ammo": {
 			[[],{
@@ -384,6 +416,10 @@ azm_double_points = {
 	private _time = time;
 	playSound "doppipunti";
 	(_display displayCtrl 1002) ctrlSetText "images\x2.paa";
+	(_display displayCtrl 1002) ctrlSetFade 1; 
+	(_display displayCtrl 1002) ctrlCommit 0;
+	(_display displayCtrl 1002) ctrlSetFade 0;
+	(_display displayCtrl 1002) ctrlCommit 0.5;
 	missionNamespace setVariable ["azm_doppi_punti",true,true];
 	systemChat format["%1",["STR_DOUBLE_POINTS_ON"]call azm_localize];
 	missionNamespace setVariable["azm_pup_active",true,true];
@@ -409,6 +445,7 @@ azm_double_points = {
 };
 
 azm_kaboom = {
+	missionNamespace setVariable["azm_pup_active",true,true];
 	private _fastzombie = GARR("mid_zombie");
 	private _slowzombie = GARR("slow_zombie");
 	"kaboom" remoteExec ["playSound",0];
@@ -419,7 +456,6 @@ azm_kaboom = {
 	{
 		_x setDamage 1;
 	} forEach _sel_del_zombie;
-	missionNamespace setVariable["azm_pup_active",true,true];
 	cutText ["<t size='3' color='#f00000'>KABOOM","PLAIN DOWN",3,true,true];
 	missionNamespace setVariable["azm_pup_active",false,true];
 };
