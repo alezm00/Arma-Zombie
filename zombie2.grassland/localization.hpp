@@ -71,4 +71,16 @@ class zombie_Localization {
 		en = "you do not have enough pointsi";
 		it = "Non hai abbastanza punti";
 	};
+	class STR_PERK_DT {
+		en = "You bought the double tap perk your fire speed has increased";
+		it = "Hai comprato il perk del double tap la tua velocità di fuoco è aumentata";
+	};
+	class STR_PERK_JUG {
+		en = "You bought the juggernout perk your life has increased";
+		it = "Hai comprato il perk di juggernout la tua vita è aumentata";
+	};
+	class STR_PERK_STAMINA {
+		en = "You bought the perk stamina now you can run endlessly";
+		it = "Hai comprato il perk stamina ora puoi correre all'infinito";
+	};
 };

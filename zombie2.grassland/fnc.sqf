@@ -24,6 +24,8 @@ azm_main_loop = {
 	
 	waitUntil { player getvariable["coconut",false]; };
 	waitUntil {missionNamespace getvariable ["azm_online",false]};
+	private _sound = ASLToAGL [0,0,0] nearestObject "#soundonvehicle";
+	deleteVehicle _sound;  
 	if (getPlayerUID player isEqualTo "_SP_PLAYER_") then {
 		[] remoteExec ["azm_start",0];
 	} else {
@@ -55,9 +57,7 @@ azm_btn_lingua = {
 azm_start = {
 	cutText["","BLACK OUT"];
 	musicon = false;
-	private _sound = ASLToAGL [0,0,0] nearestObject "#soundonvehicle";  
 	uisleep 1.4;
-	deleteVehicle _sound;
 	player setPos (getmarkerPos GTEXT("spawnmarker"));
 	player setUnitLoadout GARR("loadout");
 	998765 cutRsc ["azm_gui","PLAIN"];
@@ -70,7 +70,8 @@ azm_start = {
 	missionNamespace setVariable ["azm_doppi_punti",false,true];
 	missionNamespace setVariable ["azm_kaboom_var",true,true];
 	missionNamespace setVariable ["azm_radio_collected",0,true];
-
+	private _sound = ASLToAGL [0,0,0] nearestObject "#soundonvehicle";
+	deleteVehicle _sound;  
 	// respwan
 	missionNamespace setVariable ["azm_players_morti",0,true];
 
@@ -106,6 +107,8 @@ azm_start = {
 			_damage * 0.00001;
 		};
 	}];
+	private _sound = ASLToAGL [0,0,0] nearestObject "#soundonvehicle";
+	deleteVehicle _sound;  
 	player addEventHandler ["Respawn",{
 		params ["_unit", "_corpse"];
 		if (ismultiplayer) then {
@@ -133,6 +136,8 @@ azm_start = {
 	if (isServer) then {
 		call azm_spawn_crate;
 	};
+	private _sound = ASLToAGL [0,0,0] nearestObject "#soundonvehicle";
+	deleteVehicle _sound;  
 	zombie_counter = 0;
 	missionNamespace setVariable ["count_zombie",0,true];
 	real_spawn = [];
@@ -201,7 +206,7 @@ azm_round = {
 	//DEBUG(hint format ["%1",real_spawn]);
 	private _group = createGroup [east,true];
 	if (_this select 1) then {
-		for "_i" from 0 to (1 + (count(allPlayers))) step 1 do {
+		for "_i" from 0 to (1 * (count(allPlayers))) step 1 do {
 			(selectRandom _slowzombie) createUnit [(getmarkerPos (selectRandom (missionNamespace getVariable ["real_spawn1",[]]))),_group,"this setpos [(getpos this select 0) + random 3, (getpos this select 1) + random 3, 1];[this] spawn azm_events_zombie;"];
 			DEBUG(systemChat "11");
 			_zombie_counter_start = missionNamespace getVariable ["count_zombie",0];
@@ -210,7 +215,7 @@ azm_round = {
 		};	
 	} else {
 		if (_round > 3) then {
-			for "_i" from 1 to ((round(_round / 2)) + (count(allPlayers))) step 1 do {
+			for "_i" from 1 to ((round(_round / 2)) * (count(allPlayers))) step 1 do {
 				(selectRandom _fastzombie) createUnit [(getmarkerPos (selectRandom (missionNamespace getVariable ["real_spawn1",[]]))),_group,"this setpos [(getpos this select 0) + random 3, (getpos this select 1) + random 3, 1];[this] spawn azm_events_zombie;"];
 				DEBUG(systemChat "fast");
 				_zombie_counter_fast = missionNamespace getVariable ["count_zombie",0];
@@ -218,7 +223,7 @@ azm_round = {
 				missionNamespace setVariable ["count_zombie",_zombie_counter_fast,true];
 			};
 		};
-		for "_i" from 1 to ((_round) + (count(allPlayers))) step 1 do {
+		for "_i" from 1 to ((_round) * (count(allPlayers))) step 1 do {
 			(selectRandom _slowzombie) createUnit [(getmarkerPos (selectRandom (missionNamespace getVariable ["real_spawn1",[]]))),_group,"this setpos [(getpos this select 0) + random 3, (getpos this select 1) + random 3, 1];[this] spawn azm_events_zombie;"];
 			DEBUG(systemChat "slow");
 			_zombie_counter_slow = missionNamespace getVariable ["count_zombie",0];
@@ -233,7 +238,6 @@ azm_round = {
 azm_events_zombie = {
 	private _zombie = _this select 0;
 	private _random_loadout = GARR("load_zombie");
-	_zombie switchmove 'AmovPercMstpSnonWnonDnon_SaluteOut'; 
 	_zombie setVariable["alive",true,true];
 	_zombie addEventHandler ["Killed",{
 		params ["_unit", "_killer", "_instigator", "_useEffects"];
@@ -245,14 +249,6 @@ azm_events_zombie = {
 			[_selection,_instigator,_unit] call azm_zombie_hdamage;
 		};
 	}];
-	[_zombie,_random_loadout] spawn {
-		sleep 7;
-		//(_this select 0) setUnitLoadout (selectrandom (_this select 1));
-		while {alive (_this select 0)} do {
-			_this select 0 doMove getPos ((nearestObjects[_this select 0,["MAN"],5000]) select 0);
-			systemChat "gli zombie si muovono";
-		};
-	};
 };
 // cursorobject setSpeedMode "FULL"   speedMode (group(cursorObject))
 azm_onzombie_killed = {
@@ -318,12 +314,6 @@ azm_open_zone = { //this addAction ["Sblocca area<t color='#f00000'>  750</t>",{
 		_arr = _arr + [_area];
 		[_cursor] spawn {
 			params["_cursor"];
-			private _pos = getPosATL _cursor;
-			for "_i" from (_pos select 2) to ((_pos select 2) - 2.3) step -0.015 do {
-				_cursor setPosATL [(_pos select 0),(_pos select 1),(_i)];
-				//hint format["%1",getPos _cursor];
-				sleep 0.05;
-			};
 			deleteVehicle _cursor;
 		};
 		//DEBUG(systemChat format["%1",_arr]);

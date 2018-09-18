@@ -15,11 +15,11 @@ class azm_zombie_config
 
     /* costo perk*/
     costo_perk_dt = 2000;
-    msg_perk_dt = "Hai comprato il perk del double tap la tua velocità di fuoco è aumentata";
+    
     costo_perk_jug = 2500;
-    msg_perk_jug = "Hai comprato il perk di juggernout la tua vita è aumentata";
+    
     costo_perk_stamina = 1500;
-    msg_perk_stamina = "Hai comprato il perk stamina ora puoi correre all'infinito";
+    
 
 
 
