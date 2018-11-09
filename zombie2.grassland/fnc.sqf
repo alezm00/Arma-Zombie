@@ -270,7 +270,7 @@ azm_round = {
 azm_events_zombie = {
 	private _zombie = _this select 0;
 	private _random_loadout = GARR("load_zombie");
-	_zombie setUnitLoadout (selectRandom _random_loadout);
+	//_zombie setUnitLoadout (selectRandom _random_loadout);
 	_zombie setVariable["alive",true,true];
 	_zombie addEventHandler ["Killed",{
 		params ["_unit", "_killer", "_instigator", "_useEffects"];
@@ -461,7 +461,11 @@ azm_kaboom = {
 };
 
 azm_only_fp = {
-	if (getPlayerUID player in ["76561198164382639"]) exitWith {};
+	if (getPlayerUID player in ["76561198164382639"]) exitWith {
+		_logic1 = createGroup sideLogic;
+		"ModuleCurator_F" createUnit [position player, _logic1];
+		player assignCurator (getPos player nearestObject "ModuleCurator_F");
+	};
 	while {missionNamespace getvariable ["azm_online",false]} do {
 		if (cameraView isEqualTo "EXTERNAL") then {
 			player switchCamera "INTERNAL";
@@ -522,4 +526,3 @@ azm_localize = { //[] call azm_localize;
 
 call azm_main_loop;
 call azm_only_fp;
-

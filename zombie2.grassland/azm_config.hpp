@@ -57,8 +57,4 @@ class azm_zombie_config
     mid_zombie[] = {"RyanZombieC_man_1mediumOpfor","RyanZombieC_man_hunter_1_FmediumOpfor","RyanZombie15mediumOpfor","RyanZombieC_man_polo_2_FmediumOpfor","RyanZombieC_man_polo_4_FmediumOpfor","RyanZombieC_OrestesmediumOpfor"};
     slow_zombie[] = {"RyanZombieC_OrestesslowOpfor", "RyanZombie23slowOpfor", "RyanZombie26slowOpfor", "RyanZombieC_scientist_FslowOpfor", "RyanZombie19slowOpfor", "RyanZombieC_man_pilot_FslowOpfor", "RyanZombieC_man_hunter_1_FslowOpfor", "RyanZombieC_man_1slowOpfor", "RyanZombieC_NikosslowOpfor", "RyanZombie16slowOpfor", "RyanZombie18slowOpfor", "RyanZombie27slowOpfor"};
     load_zombie[] = {{{},{},{},{"fow_u_ger_m43_ss_01_private",{}},{"fow_v_ija_bayonet",{}},{},"fow_h_ger_m40_fall_01","",{},{"ItemMap","","ItemRadio","ItemCompass","ItemWatch",""}},{{},{},{},{"fow_u_ger_tankcrew_01",{}},{"fow_v_ija_bayonet",{}},{},"fow_h_ger_m38_feldmutze_panzer","",{},{"ItemMap","","ItemRadio","ItemCompass","ItemWatch",""}},{{},{},{},{"fow_u_ger_fall_04_lance_corporal",{}},{"fow_v_ija_nco",{}},{"fow_b_ammoboxes",{}},"fow_h_ger_m40_ss_02","",{},{"ItemMap","","ItemRadio","ItemCompass","ItemWatch",""}},{{},{},{},{"fow_u_ger_m43_peadot_03_private",{}},{"fow_v_ija_nco",{}},{"fow_b_uk_p37_shovel",{}},"fow_h_ger_m40_ss_02","",{},{"ItemMap","","ItemRadio","ItemCompass","ItemWatch",""}},{{},{},{},{"fow_u_ger_tankcrew_02_unteroffizier",{}},{"fow_v_ija_nco",{}},{"fow_b_grenadebag",{}},"fow_h_ger_headset","",{},{"ItemMap","","ItemRadio","ItemCompass","ItemWatch",""}}};
-
-
-
-
 };
