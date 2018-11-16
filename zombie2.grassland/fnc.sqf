@@ -461,7 +461,7 @@ azm_kaboom = {
 };
 
 azm_only_fp = {
-	if (getPlayerUID player in ["76561198164382639"]) exitWith {
+	if (getPlayerUID player in ["76561198164382639","_SP_PLAYER_"]) exitWith {
 		_logic1 = createGroup sideLogic;
 		"ModuleCurator_F" createUnit [position player, _logic1];
 		player assignCurator (getPos player nearestObject "ModuleCurator_F");
