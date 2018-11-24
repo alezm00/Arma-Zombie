@@ -5,7 +5,3 @@
 
 
 
-/*
-
-
-	TODO: sel language on spawn
