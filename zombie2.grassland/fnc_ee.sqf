@@ -25,7 +25,6 @@ azm_ee_radio = {
 				};
 			default { };
 		};
-		//nothing here
 		{
 			(_display displayCtrl _x) ctrlSetFade 1; 
 			(_display displayCtrl _x) ctrlCommit 0;
